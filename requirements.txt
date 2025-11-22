@@ -1,0 +1,11 @@
+# Core
+streamlit>=1.25.0
+requests>=2.31.0
+
+# Google ADK & Vertex AI
+google-cloud-aiplatform
+google-auth>=2.23.0
+google-genai>=0.6.0  # ADK/GenAI client
+
+# Optional (for structured output handling)
+pandas>=2.1.0
