@@ -3,10 +3,11 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 
 from google.adk.agents import Agent, LoopAgent
-from ..config import config
-from ..agent_utils import suppress_output_callback
-from ..tools import compute_scores_tool
-from ..validation_checkers import AnalysisValidationChecker
+from config import config
+from agent_utils import suppress_output_callback
+from tools import compute_scores_tool
+from validation_checkers import AnalysisValidationChecker
+from google.adk.tools import FunctionTool
 
 # ------------------- Final Message Agent -------------------
 
@@ -38,13 +39,23 @@ final_message_agent = Agent(
 
 # ------------------- Robust Final Message Agent -------------------
 
+final_message_validator_agent = Agent(
+    name="final_message_validator_agent",
+    model=config.worker_model,
+    instruction="""
+    Validate that the final message is complete and user-ready.
+    Access state['final_message'].
+    Set state['validation_passed'] = True if valid, else False.
+    """,
+    tools=[],
+    output_key="validation_passed",
+    after_agent_callback=lambda agent, state: AnalysisValidationChecker().validate(state)
+)
+
 robust_final_message_agent = LoopAgent(
     name="robust_final_message_agent",
     description="Ensures final message output is valid and user-ready.",
-    sub_agents=[
-        final_message_agent,
-        AnalysisValidationChecker(name="final_output_validator"),
-    ],
+    sub_agents=[final_message_agent, final_message_validator_agent],
     max_iterations=config.max_search_iterations,
     after_agent_callback=suppress_output_callback,
 )

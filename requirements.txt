@@ -6,6 +6,10 @@ requests>=2.31.0
 google-cloud-aiplatform
 google-auth>=2.23.0
 google-genai>=0.6.0  # ADK/GenAI client
+google-adk>=0.5.0
+
+# Get dotev
+python-dotenv>=1.0.0
 
 # Optional (for structured output handling)
 pandas>=2.1.0

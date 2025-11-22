@@ -5,10 +5,11 @@
 from google.adk.agents import Agent, LoopAgent
 from google.adk.tools import google_search
 
-from ..config import config
-from ..agent_utils import suppress_output_callback
-from ..validation_checkers import ProductLookupValidationChecker
-from ..tools import openfoodfacts_lookup_tool
+from config import config
+from agent_utils import suppress_output_callback
+from validation_checkers import ProductLookupValidationChecker
+from tools import openfoodfacts_lookup_tool
+from google.adk.tools import FunctionTool
 
 # ------------------- Basic Product Lookup Agent -------------------
 
@@ -34,13 +35,30 @@ product_lookup = Agent(
 
 # ------------------- Robust Product Lookup (Loop) -------------------
 
+from google.adk.agents import Agent, LoopAgent
+from sub_agents.product_lookup import product_lookup
+from validation_checkers import ProductLookupValidationChecker
+from agent_utils import suppress_output_callback
+from config import config
+
+# Validation Agent
+product_lookup_validator_agent = Agent(
+    name="product_lookup_validator_agent",
+    model=config.worker_model,
+    instruction="""
+    Validate that the product lookup returned a product name.
+    Access the state key: state['product_record'].
+    Set state['validation_passed'] = True if valid, else False.
+    """,
+    tools=[],
+    output_key="validation_passed",
+    after_agent_callback=lambda agent, state: ProductLookupValidationChecker().validate(state)
+)
+
 robust_product_lookup = LoopAgent(
     name="robust_product_lookup",
     description="Retries product lookup until valid data is obtained or max iterations reached.",
-    sub_agents=[
-        product_lookup,
-        ProductLookupValidationChecker(name="product_lookup_validator"),
-    ],
+    sub_agents=[product_lookup, product_lookup_validator_agent],
     max_iterations=config.max_search_iterations,
     after_agent_callback=suppress_output_callback,
 )

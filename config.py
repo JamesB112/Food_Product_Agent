@@ -1,7 +1,7 @@
 # Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
-# You may not use this file except in compliance with the License.
+# you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
@@ -12,14 +12,31 @@
 
 import os
 from dataclasses import dataclass
-import google.auth
+from dotenv import load_dotenv
 
-# Resolve project and ensure Vertex AI is used
-_, project_id = google.auth.default()
-os.environ.setdefault("GOOGLE_CLOUD_PROJECT", project_id)
-os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
-os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "True")
+# ===============================
+# Load environment variables
+# ===============================
+load_dotenv()  # Loads variables from .env file if present
 
+# ===============================
+# Google AI Studio API Key
+# ===============================
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+
+if not GOOGLE_API_KEY:
+    raise RuntimeError(
+        "❌ Missing GOOGLE_API_KEY environment variable.\n"
+        "Set it before running your agent, for example:\n"
+        "   export GOOGLE_API_KEY='your-key-here'   (macOS/Linux)\n"
+        "   setx GOOGLE_API_KEY \"your-key-here\"    (Windows)\n"
+        "Or create a .env file in your project root with:\n"
+        "   GOOGLE_API_KEY=your-key-here"
+    )
+
+# ===============================
+# Agent configuration
+# ===============================
 @dataclass
 class ResearchConfiguration:
     """
@@ -34,3 +51,4 @@ class ResearchConfiguration:
     max_search_iterations: int = 5
 
 config = ResearchConfiguration()
+

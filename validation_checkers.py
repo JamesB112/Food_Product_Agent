@@ -2,15 +2,15 @@
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 
-from google.adk.agents import ValidationChecker
 from typing import Dict
 
-class ProductLookupValidationChecker(ValidationChecker):
+class ProductLookupValidationChecker:
     """
     Validates that the product lookup returned a product name and ingredients.
     """
+
     def __init__(self, name="product_lookup_validation_checker"):
-        super().__init__(name=name)
+        self.name = name
 
     def validate(self, state: Dict) -> bool:
         product = state.get("product_record")
@@ -22,12 +22,13 @@ class ProductLookupValidationChecker(ValidationChecker):
         return True
 
 
-class AnalysisValidationChecker(ValidationChecker):
+class AnalysisValidationChecker:
     """
     Validates that analysis contains a health_score and NOVA classification.
     """
+
     def __init__(self, name="analysis_validation_checker"):
-        super().__init__(name=name)
+        self.name = name
 
     def validate(self, state: Dict) -> bool:
         analysis = state.get("analysis")

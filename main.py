@@ -1,21 +1,52 @@
-from agent import food_health_agent
+# main.py
 
-def run_local():
-    print("\n🧪 Food Health Agent — Local Debug Mode")
-    print("Type 'exit' to quit.\n")
+import asyncio
+from google.adk.runners import Runner
+from google.adk.sessions import InMemorySessionService
+from google.genai import types as genai_types
+
+from agent import root_agent  # your root agent
+
+async def main():
+    """Runs the Food Product Health Advisor agent interactively."""
+
+    # Set up an in-memory session service
+    session_service = InMemorySessionService()
+    await session_service.create_session(
+        app_name="food_health_app",
+        user_id="user_1",
+        session_id="session_1"
+    )
+
+    # Create the runner
+    runner = Runner(
+        agent=root_agent,
+        app_name="food_health_app",
+        session_service=session_service
+    )
+
+    print("Welcome to the Food Product Health Advisor!")
+    print("Enter a product name or ingredients list, or 'exit' to quit.\n")
 
     while True:
-        user_input = input("You: ")
-
-        if user_input.lower() in ["exit", "quit"]:
+        user_input = input("Your query: ")
+        if user_input.lower() == "exit":
             print("Goodbye!")
             break
 
-        try:
-            response = food_health_agent.run_sync(user_input)
-            print(f"\n🔍 Agent Response:\n{response.text}\n")
-        except Exception as e:
-            print(f"\n❌ Error running agent: {e}\n")
+        print("\nProcessing...\n")
+
+        # Run the agent asynchronously and stream events
+        async for event in runner.run_async(
+            user_id="user_1",
+            session_id="session_1",
+            new_message=genai_types.Content(
+                role="user",
+                parts=[genai_types.Part.from_text(text=user_input)]
+            )
+        ):
+            if event.is_final_response() and event.content and event.content.parts:
+                print(event.content.parts[0].text)
 
 if __name__ == "__main__":
-    run_local()
+    asyncio.run(main())

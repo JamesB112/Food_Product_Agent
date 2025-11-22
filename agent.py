@@ -6,15 +6,15 @@ import datetime
 from google.adk.agents import Agent
 from google.adk.tools import FunctionTool
 
-from .config import config
-from .sub_agents import (
+from config import config
+from sub_agents import (
     robust_product_lookup,
     robust_ingredient_analyzer,
     robust_health_scorer,
     robust_final_message_agent,
 )
-from .tools import openfoodfacts_lookup_tool, compute_scores_tool, suggest_alternatives_tool
-from .agent_utils import suppress_output_callback
+from tools import openfoodfacts_lookup_tool, compute_scores_tool, suggest_alternatives_tool
+from agent_utils import suppress_output_callback
 
 # ------------------- Root Interactive Food Health Agent -------------------
 
