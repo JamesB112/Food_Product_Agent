@@ -10,7 +10,6 @@ from .config import config
 from .sub_agents import (
     robust_product_lookup,
     robust_ingredient_analyzer,
-    robust_health_scorer,
     robust_final_message_agent,
 )
 from .tools import openfoodfacts_lookup, compute_simple_scores, suggest_alternatives
@@ -25,29 +24,23 @@ interactive_food_health_agent = Agent(
     This agent helps users understand the health profile of a food product.
     Workflow:
     1. Accepts a product name, ingredient list, or ingredient-related questions.
-    2. Uses sub-agents to retrieve product info, analyze ingredients, and compute health scores.
+    2. Uses sub-agents to retrieve product info, analyze ingredients, and format a draft final message.
     3. Optionally finds healthier alternatives.
     4. Generates a polished response with structured and friendly output.
     """,
     instruction=f"""
-    You are a friendly nutrition assistant named Agent NutriGuide.
-    Use only the tools explicitly listed below. Do NOT invent new tools.
+    You are Agent NutriGuide. When analyzing a product:
+
+    1. Call `robust_product_lookup` to fetch product info.
+    2. Call `robust_ingredient_analyzer` to analyze ingredients and get health scores.
+    3. Call `robust_final_message_agent` to generate a user-friendly final message.
+
+    Use only the outputs of these agents. Do not hallucinate additional tools.
     Current date: {datetime.datetime.now().strftime('%Y-%m-%d')}
-    
-    Available tools:
-    - openfoodfacts_lookup
-    - compute_simple_scores
-    - suggest_alternatives
-    
-    Guidelines:
-    - Only call these tools exactly as named.
-    - Always provide user-friendly explanations.
-    - Do not hallucinate additional functions.
     """,
     sub_agents=[
         robust_product_lookup,
         robust_ingredient_analyzer,
-        robust_health_scorer,
         robust_final_message_agent,
     ],
     tools=[

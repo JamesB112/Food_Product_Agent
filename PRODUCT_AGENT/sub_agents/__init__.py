@@ -3,12 +3,17 @@
 # ---------------------------
 
 from .product_lookup import product_lookup, robust_product_lookup
-from .ingredient_analyzer import ingredient_analyzer, robust_ingredient_analyzer
-from .health_scorer import health_scorer, robust_health_scorer
+
+# New Master Ingredient Analysis Graph
+from .ingredient_master import Food_Ingredient_Analiser
+
+# Main robust ingredient analyzer (LoopAgent wrapper)
+from .ingresent_robut_agent import robust_ingredient_analyzer
+
 from .final_message_agent import final_message_agent, robust_final_message_agent
 
 # ---------------------------
-# Validators (optional, if needed separately)
+# Validators
 # ---------------------------
 from ..validation_checkers import ProductLookupValidationChecker, AnalysisValidationChecker
 
@@ -17,13 +22,9 @@ __all__ = [
     "product_lookup",
     "robust_product_lookup",
 
-    # Ingredient Analysis
-    "ingredient_analyzer",
+    # Ingredient Analysis (new architecture)
+    "Food_Ingredient_Analiser",
     "robust_ingredient_analyzer",
-
-    # Health Scoring
-    "health_scorer",
-    "robust_health_scorer",
 
     # Final Message Agent
     "final_message_agent",

@@ -1,39 +1,78 @@
-# Copyright 2025 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-
-from google.adk.agents import Agent, LoopAgent
-
+from google.adk.agents import Agent
 from ..config import config
 from ..agent_utils import suppress_output_callback
-from ..validation_checkers import AnalysisValidationChecker
 from ..tools import compute_simple_scores
- 
-# ------------------- Basic Ingredient Analyzer Agent -------------------
 
-ingredient_analyzer = Agent(
+# ------------------- Ingredient Normalizer -------------------
+ingredient_normalizer = Agent(
     model=config.worker_model,
-    name="ingredient_analyzer",
-    description="Analyzes ingredients and computes a health score along with NOVA classification.",
+    name="ingredient_normalizer",
+    description="Normalizes ingredient text.",
     instruction="""
-    You are an AI agent tasked with analyzing a product's ingredients and nutritional information.
-    Compute a health_score (0–100), determine the NOVA classification (1–4), and provide a breakdown of sugar, saturated fat, salt, fiber, and protein per 100g.
-    Output the result as a dictionary in the `analysis` state key.
+    Normalize the ingredient list:
+    - Fix casing & spelling
+    - Expand E-numbers
+    - Translate to English
+    - Split compound ingredients
+
+    OUTPUT:
+    {
+        "normalized_ingredients": [...]
+    }
+    """,
+    tools=[],
+    output_key="normalized_ingredients",
+    after_agent_callback=suppress_output_callback,
+)
+
+# ------------------- Additive & Processing Detector -------------------
+processing_detector = Agent(
+    model=config.worker_model,
+    name="processing_detector",
+    description="Detects additives and industrial processing indicators.",
+    instruction="""
+    OUTPUT:
+    {
+        "detected_additives": [...],
+        "processing_indicators": [...],
+        "all_signals": [...]
+    }
+    """,
+    tools=[],
+    output_key="processing_signals",
+    after_agent_callback=suppress_output_callback,
+)
+
+# ------------------- NOVA Classifier -------------------
+nova_classifier = Agent(
+    model=config.worker_model,
+    name="nova_classifier",
+    description="Classifies food using NOVA 1–4.",
+    instruction="""
+    OUTPUT:
+    {
+        "nova": 1-4,
+        "confidence": 0-1,
+        "reasoning": "..."
+    }
+    """,
+    tools=[],
+    output_key="nova_result",
+    after_agent_callback=suppress_output_callback,
+)
+
+# ------------------- Health Scorer -------------------
+health_scorer = Agent(
+    model=config.worker_model,
+    name="health_scorer",
+    description="Computes the final health score.",
+    instruction="""
+    Use compute_simple_scores to calculate:
+    - health_score
+    - macro breakdown per 100g
+    - include NOVA class
     """,
     tools=[compute_simple_scores],
     output_key="analysis",
     after_agent_callback=suppress_output_callback,
-)
-
-# ------------------- Robust Ingredient Analyzer (Loop) -------------------
- 
-robust_ingredient_analyzer = LoopAgent(
-    name="robust_ingredient_analyzer",
-    description="Retries ingredient analysis until valid results are produced or max iterations reached.",
-    sub_agents=[
-        ingredient_analyzer,
-        AnalysisValidationChecker(name="analysis_validation_checker"),
-    ],
-    max_iterations=3,
-    after_agent_callback=suppress_output_callback,
-)
+) 
