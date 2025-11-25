@@ -4,11 +4,13 @@
 
 from google.adk.agents import Agent, LoopAgent
 from google.adk.tools import google_search
+from google.adk.tools import FunctionTool
 
 from ..config import config
 from ..agent_utils import suppress_output_callback
 from ..validation_checkers import ProductLookupValidationChecker
 from ..tools import openfoodfacts_lookup
+from .google_search_agent import google_search_agent
 
 # ------------------- Basic Product Lookup Agent -------------------
 
@@ -27,9 +29,10 @@ product_lookup = Agent(
     - nutriments
     - categories
     """,
-    tools=[openfoodfacts_lookup, google_search],
+    tools=[FunctionTool(openfoodfacts_lookup)],
+    sub_agents=[google_search_agent],
     output_key="product_record",
-    after_agent_callback=suppress_output_callback,
+    after_agent_callback=suppress_output_callback
 )
 
 # ------------------- Robust Product Lookup (Loop) -------------------
@@ -39,7 +42,7 @@ robust_product_lookup = LoopAgent(
     description="Retries product lookup until valid data is obtained or max iterations reached.",
     sub_agents=[
         product_lookup,
-        ProductLookupValidationChecker(name="product_lookup_validation_checker"),
+        ProductLookupValidationChecker(name="product_lookup_validation_checker")
     ],
-    max_iterations=3,
+    max_iterations=3
 )

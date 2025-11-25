@@ -1,4 +1,5 @@
 from google.adk.agents import Agent
+from google.adk.tools import FunctionTool
 from ..config import config
 from ..agent_utils import suppress_output_callback
 from ..tools import compute_simple_scores
@@ -72,7 +73,7 @@ health_scorer = Agent(
     - macro breakdown per 100g
     - include NOVA class
     """,
-    tools=[compute_simple_scores],
+    tools=[FunctionTool(compute_simple_scores)],
     output_key="analysis",
     after_agent_callback=suppress_output_callback,
 ) 

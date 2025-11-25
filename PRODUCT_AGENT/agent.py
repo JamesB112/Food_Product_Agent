@@ -5,12 +5,13 @@
 import datetime
 from google.adk.agents import Agent
 from google.adk.tools import FunctionTool
+from google.adk.tools import transfer_to_agent
 
 from .config import config
 from .sub_agents import (
     robust_product_lookup,
     robust_ingredient_analyzer,
-    robust_final_message_agent,
+    robust_final_message_agent
 )
 from .tools import openfoodfacts_lookup, compute_simple_scores, suggest_alternatives
 from .agent_utils import suppress_output_callback
@@ -43,11 +44,11 @@ interactive_food_health_agent = Agent(
         robust_ingredient_analyzer,
         robust_final_message_agent,
     ],
-    tools=[
-        FunctionTool(openfoodfacts_lookup),
-        FunctionTool(compute_simple_scores),
-        FunctionTool(suggest_alternatives)
-    ],
+    # tools=[
+    #     FunctionTool(openfoodfacts_lookup),
+    #     FunctionTool(compute_simple_scores),
+    #     FunctionTool(suggest_alternatives)
+    # ],
     output_key="final_output",
     after_agent_callback=suppress_output_callback,  # make sure callback accepts *args, **kwargs
 )
