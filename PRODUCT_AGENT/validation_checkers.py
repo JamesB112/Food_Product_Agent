@@ -8,47 +8,6 @@ from .config import config
 
 
 # ---------------------------------------------------------------------
-# Product Lookup Validation Checker
-# ---------------------------------------------------------------------
-
-class ProductLookupValidationChecker(Agent):
-    """
-    ADK-compatible validation agent for product lookup.
-    Ensures product_record contains required fields.
-    """
-
-    def __init__(self, name: str = "product_lookup_validation_checker"):
-        super().__init__(
-            name=name,
-            model=config.validator_model,    # or config.worker_model if you prefer
-            description="Validates the product_record returned by product_lookup.",
-            instruction="""
-You are a validation agent.
-
-Your task is to inspect the `product_record` in state and determine if it is valid.
-
-A valid product_record MUST include:
-- name (non-empty)
-- ingredients_text (optional, but warn if missing)
-- nutriments (optional, but warn if missing)
-
-Rules:
-
-1. If product_record is missing entirely → output: "No product_record provided."
-2. If name is missing or empty → output: "Missing product name."
-3. If all required fields are present → output exactly: "valid"
-
-Your output MUST be either:
-- "valid"
-- or a short error message string
-
-Do NOT output JSON. Do not wrap in code blocks.
-""",
-            output_key="validation_result",
-        )
-
-
-# ---------------------------------------------------------------------
 # Ingredient / Health Analysis Validation Checker
 # ---------------------------------------------------------------------
 

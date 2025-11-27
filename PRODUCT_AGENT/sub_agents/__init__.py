@@ -2,7 +2,7 @@
 # Core Product Agents
 # ---------------------------
 
-from .product_lookup import product_lookup, robust_product_lookup
+from .product_lookup import robust_product_lookup
 
 # New Master Ingredient Analysis Graph
 from .ingredient_master import Food_Ingredient_Analiser
@@ -15,11 +15,10 @@ from .final_message_agent import final_message_agent, robust_final_message_agent
 # ---------------------------
 # Validators
 # ---------------------------
-from ..validation_checkers import ProductLookupValidationChecker, AnalysisValidationChecker
+from ..validation_checkers import AnalysisValidationChecker
 
 __all__ = [
     # Product Lookup
-    "product_lookup",
     "robust_product_lookup",
 
     # Ingredient Analysis (new architecture)
@@ -31,6 +30,5 @@ __all__ = [
     "robust_final_message_agent",
 
     # Validators
-    "ProductLookupValidationChecker",
     "AnalysisValidationChecker",
 ]

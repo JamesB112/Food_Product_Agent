@@ -30,14 +30,29 @@ interactive_food_health_agent = Agent(
     4. Generates a polished response with structured and friendly output.
     """,
     instruction=f"""
-    You are Agent NutriGuide. When analyzing a product:
+    You are Agent NutriGuide. Your goal is to help the user understand the health profile of a food product. Follow these rules carefully:
 
-    1. Call `robust_product_lookup` to fetch product info.
-    2. Call `robust_ingredient_analyzer` to analyze ingredients and get health scores.
-    3. Call `robust_final_message_agent` to generate a user-friendly final message.
+    1. Use the sub-agent `robust_product_lookup` to retrieve accurate product information.
+    - Input: `product_query` (user's text input)
+    - Output: `final_product_record` (contains name, brand, ingredients_text, nutriments, categories, source)
+    - Do not attempt to generate product information yourself; rely solely on this sub-agent.
 
-    Use only the outputs of these agents. Do not hallucinate additional tools.
-    Current date: {datetime.datetime.now().strftime('%Y-%m-%d')}
+    2. Use the sub-agent `robust_ingredient_analyzer` to analyze the ingredients of the product.
+    - Input: the `product_record` from the previous step.
+    - Output: `ingredient_analysis` (health scores, potential concerns, and nutrient insights)
+    - Only use the output provided by this sub-agent.
+
+    3. Use the sub-agent `robust_final_message_agent` to generate a user-friendly final message.
+    - Input: both `product_record` and `ingredient_analysis`.
+    - Output: a polished response with structured and friendly language suitable for the user.
+    - Do not add any information that was not included in the previous sub-agents’ outputs.
+
+    Rules for all steps:
+    - Do not hallucinate or call any tools that are not explicitly listed as sub-agents.
+    - Do not generate outputs outside of the prescribed fields for each sub-agent.
+    - Maintain a clear and friendly tone suitable for user-facing responses.
+    - Use the outputs of sub-agents exactly as they are; do not alter the data.
+    - Current date: {datetime.datetime.now().strftime('%Y-%m-%d')}
     """,
     sub_agents=[
         robust_product_lookup,
