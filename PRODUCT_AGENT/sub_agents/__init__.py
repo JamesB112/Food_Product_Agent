@@ -1,34 +1,18 @@
-# ---------------------------
-# Core Product Agents
-# ---------------------------
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-from .product_lookup import robust_product_lookup
-
-# New Master Ingredient Analysis Graph
-from .ingredient_master import Food_Ingredient_Analiser
-
-# Main robust ingredient analyzer (LoopAgent wrapper)
-from .ingresent_robut_agent import robust_ingredient_analyzer
-
-from .final_message_agent import final_message_agent, robust_final_message_agent
-
-# ---------------------------
-# Validators
-# ---------------------------
-from ..validation_checkers import AnalysisValidationChecker
-
-__all__ = [
-    # Product Lookup
-    "robust_product_lookup",
-
-    # Ingredient Analysis (new architecture)
-    "Food_Ingredient_Analiser",
-    "robust_ingredient_analyzer",
-
-    # Final Message Agent
-    "final_message_agent",
-    "robust_final_message_agent",
-
-    # Validators
-    "AnalysisValidationChecker",
-]
+from .product_researcher import robust_product_researcher
+from .nova_classifier import robust_nova_classifier
+from .health_assessor import robust_health_assessor
+from .alternative_finder import robust_alternative_finder

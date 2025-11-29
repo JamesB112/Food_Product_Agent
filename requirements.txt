@@ -15,4 +15,5 @@ python-dotenv>=1.0.0
 # Optional (for structured output handling)
 pandas>=2.1.0
 
- 
+streamlit
+deep-translator
