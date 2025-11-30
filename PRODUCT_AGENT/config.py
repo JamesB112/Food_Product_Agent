@@ -6,7 +6,7 @@ from dataclasses import dataclass
 # ============================================================================
 
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "FALSE"
-os.environ["GOOGLE_API_KEY"] = "AIzaSyBMvIvcxwOVMbkjI_fdvWQu2WBhdvi8uLU"  # Replace with your actual API key
+os.environ["GOOGLE_API_KEY"] = ""  # Replace with your actual API key
 
 # ============================================================================
 
