@@ -8,7 +8,7 @@ This project implements a multi-agent system for analyzing food products using t
 
 Consumers often struggle to understand the nutritional quality and health implications of food products. Manual research is time-consuming, inconsistent, and difficult to scale when comparing multiple products or exploring ingredients in depth.
 
-In Australia, a health star rating system does exists to provide a high level ranking of a products "healthiness", however is not widely adopted, and experts say is based on a flawed formula, which manufactors can easlially explit to make their products seem healthy, where in reality they are not [https://www.sbs.com.au/news/article/health-star-rating-system-changes-criticism/g2el9r52i].
+In Australia, a health star rating system does exists to provide a high level ranking of a products "healthiness", however is not widely adopted, and experts say is based on a flawed formula, which manufactors can easlially explit to make their products seem healthy, where in reality they are not (https://www.sbs.com.au/news/article/health-star-rating-system-changes-criticism/g2el9r52i).
 
 To address this issue, I have developed a draft AI Agent, which despite having a lot more work to get it production ready, addesses this issue, by giving propoer advice to consumers.
 
@@ -154,10 +154,34 @@ Food_Product_Agent/
 
 ---
 
-## License
+## Special Mention
 
-```
-Copyright 2025 Google LLC
-Licensed under the Apache License, Version 2.0
-http://www.apache.org/licenses/LICENSE-2.0
-```
+I would like to recognise the great work being done by Open Food Facts (https://world.openfoodfacts.org/).
+
+Am curring using one of the API's as a product recommender.
+
+They have an awesome app you should try.
+ 
+
+
+## Room for Improvement
+
+There is a lot of room for improving this Agent, including but not limited to:
+
+- Redesign the food product recommender to use grocery websites, so pricing data can be used as a ranking metric as well (i.e., Health‑to‑Price ratio). It's clear that not everyone can afford the healthiest options, but incorporating cost‑sensitive ranking would increase accessibility.
+
+- Add debugging, logging, and persistent chat/history storage to improve user experience and help identify weak points in the architecture. Caching previously retrieved product data would also speed up future queries.
+
+- Improve robustness through stricter agent rules and instruction design to ensure the correct tools are used at the right times. Additional tools for multi‑language processing or for accessing specialised ingredient dictionaries would reduce hallucinations.
+
+- Replace static, hard‑coded NOVA classification rules with a dynamically updated nutrition science knowledge base or public dataset to ensure classifications remain current and evidence‑based.
+
+- Add user profiling support (budget, dietary restrictions, health goals, allergens) to produce personalised nutrition insights and recommendations.
+
+- Strengthen error‑handling for cases where search tools fail, rate‑limit, or return incomplete product data. This could include fallback searches or ingredient‑based inference.
+
+- Create a Streamlit app as a front-end to the Agent.
+
+- Support batch comparison mode, allowing users to compare several products simultaneously.
+
+- Introduce automated monitoring that refreshes product data when updated nutrition facts become available.
