@@ -12,7 +12,6 @@ In Australia, a health star rating system does exists to provide a high level ra
 
 To address this issue, I have developed a draft AI Agent, which despite having a lot more work to get it production ready, addesses this issue, by giving propoer advice to consumers.
 
-The Food Product Health Agent automates this workflow. It combines a Wikipedia-filtered Google Search tool with specialized sub-agents to provide structured, actionable insights on food products.
 
 ![Architecture](./flowchart.png "Optional Title")
 
@@ -26,7 +25,7 @@ The **interactive_food_health_agent** orchestrates all sub-agents and tools. Its
 
 **1. Product Researcher: `robust_product_researcher`**
 
-* Looks up detailed product information via the Wikipedia-filtered Google Search tool.
+* Looks up detailed product information.
 * Stores the raw structured data in `product_data`.
 * Retries automatically if data is incomplete.
 
@@ -47,11 +46,11 @@ The **interactive_food_health_agent** orchestrates all sub-agents and tools. Its
 
 ### Tools
 
-**Google Search Tool (`google_search_tool`)**
+** Open Food Facts Tool
 
-* Callable function returning structured search results.
-* Filters out Wikipedia results automatically.
+* Callable function returning structured product information.
 * Used by `robust_product_researcher` to retrieve product information.
+* The website can be found here[https://world.openfoodfacts.org/]
 
 ---
 
@@ -137,14 +136,11 @@ Food_Product_Agent/
 │   ├─ agent.py                      # Main agent orchestration
 │   ├─ sub_agents                    # Sub-agent definitions
 ├       |─ alternative_finder.py     # Finds alternative products
-├       |─ google_search_agent.py    # Custom Google Search Agent
 ├       |─ health_assessor.py        # Assesses the healthiness of a product
 ├       |─ nova_classifier.py        # Determines the level of food processing for a product
 ├       └─ product_researcher.py     # Finds the ingredients of a given product
 
-├─ tools/
-│   └─ google_search_tool.py         # Wikipedia-filtered Google Search tool
-├─ streamlit_app.py                  # Interactive testing interface
+├─ tools.py                          # Project Tools
 ├─ config.py                         # Model configuration and parameters
 ├─ agent_util.py                     # Utility functions for agents
 ├─ validation_checkers.py            # Custom validation checkers for agent outputs
@@ -169,6 +165,8 @@ They have an awesome app you should try.
 There is a lot of room for improving this Agent, including but not limited to:
 
 - Redesign the food product recommender to use grocery websites, so pricing data can be used as a ranking metric as well (i.e., Health‑to‑Price ratio). It's clear that not everyone can afford the healthiest options, but incorporating cost‑sensitive ranking would increase accessibility.
+
+- Search Engine change. Add in google search as a tool, as open facts can be quite limited
 
 - Add debugging, logging, and persistent chat/history storage to improve user experience and help identify weak points in the architecture. Caching previously retrieved product data would also speed up future queries.
 
