@@ -7,7 +7,6 @@ from .sub_agents import (
     robust_health_assessor,
     robust_alternative_finder
 )
-from .tools import google_search_tool
 
 
 # --- AGENT DEFINITIONS ---
@@ -68,8 +67,7 @@ interactive_food_health_agent = Agent(
         robust_nova_classifier,
         robust_health_assessor,
         robust_alternative_finder
-    ],
-    tools=[google_search_tool]
+    ]
 )
 
 

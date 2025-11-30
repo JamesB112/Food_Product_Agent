@@ -6,7 +6,7 @@ from dataclasses import dataclass
 # ============================================================================
 
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "FALSE"
-os.environ["GOOGLE_API_KEY"] = ""  # Replace with your actual API key
+os.environ["GOOGLE_API_KEY"] = "AIzaSyBMvIvcxwOVMbkjI_fdvWQu2WBhdvi8uLU"  # Replace with your actual API key
 
 # ============================================================================
 
@@ -24,10 +24,11 @@ class FoodHealthConfiguration:
         max_alternatives (int): Maximum number of alternatives to suggest.
         temperature (float): Generation temperature for responses.
     """
-    main_agent_model: str = "gemini-2.0-flash-exp"
-    researcher_model: str = "gemini-2.0-flash-exp"
-    classifier_model: str = "gemini-2.0-flash-exp"
-    alternative_model: str = "gemini-2.0-flash-exp"
+    main_agent_model: str = "gemini-2.5-flash"
+    researcher_model: str = "gemini-2.5-flash"
+    classifier_model: str = "gemini-2.5-flash"
+    alternative_model: str = "gemini-2.5-flash"
+    search_model: str = "gemini-2.5-flash"
     max_search_results: int = 5
     max_alternatives: int = 3
     temperature: float = 0.7
