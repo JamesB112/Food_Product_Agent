@@ -1,17 +1,3 @@
-# Copyright 2025 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import requests
 from typing import Dict, Any, List
 from google.adk.tools import FunctionTool
@@ -354,6 +340,39 @@ def suggest_alternatives(product_data: Dict[str, Any], limit: int = 3) -> Dict[s
     except Exception as e:
         return {"alternatives": [], "error": f"Failed to find alternatives: {str(e)}"}
 
+# tools/google_search_tool.py
+
+def google_search_tool(query: str) -> dict:
+    """
+    Google Search tool for ADK 1.x.
+    Returns structured search results as a dictionary.
+    Automatically filters out Wikipedia results.
+    """
+
+    try:
+        # --------------------------
+        # TODO: Replace this stub with your real search API call
+        # --------------------------
+        stub_results = [
+            {"title": "Example Product", "url": "https://example.com/product", "snippet": "Sample description"},
+            {"title": "Wikipedia Result", "url": "https://en.wikipedia.org/wiki/Food", "snippet": "This should be filtered out"}
+        ]
+
+        # Filter out Wikipedia results
+        filtered = [r for r in stub_results if "wikipedia.org" not in r["url"].lower()]
+
+        # If all results were Wikipedia, return an error dict
+        if not filtered:
+            return {"query": query, "results": [], "error": "no_non_wikipedia_results"}
+
+        # Return clean, structured results
+        return {"query": query, "results": filtered, "result_count": len(filtered)}
+
+    except Exception as e:
+        return {"query": query, "error": str(e)}
+
+
+ 
 
 # ------------------- Tool Registration -------------------
 
@@ -365,3 +384,5 @@ product_lookup_tool = FunctionTool(
 alternative_finder_tool = FunctionTool(
     suggest_alternatives,
 )
+
+
