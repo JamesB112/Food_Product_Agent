@@ -8,7 +8,7 @@ This project implements a multi-agent system for analyzing food products using t
 
 Consumers often struggle to understand the nutritional quality and health implications of food products. Manual research is time-consuming, inconsistent, and difficult to scale when comparing multiple products or exploring ingredients in depth.
 
-In Australia, a health star rating system does exists, however is not widely adopted, and experts say is based on a flawed formula, which manufactors can easlially explit to make their products seem healthy, where in reality they are not [https://www.sbs.com.au/news/article/health-star-rating-system-changes-criticism/g2el9r52i].
+In Australia, a health star rating system does exists to provide a high level ranking of a products "healthiness", however is not widely adopted, and experts say is based on a flawed formula, which manufactors can easlially explit to make their products seem healthy, where in reality they are not [https://www.sbs.com.au/news/article/health-star-rating-system-changes-criticism/g2el9r52i].
 
 To address this issue, I have developed a draft AI Agent, which despite having a lot more work to get it production ready, addesses this issue, by giving propoer advice to consumers.
 
@@ -94,6 +94,28 @@ pip install -r requirements.txt
 ```
 
 ---
+
+
+4. Update API Key:
+
+Within the `config.py`, please save your Google API KEY in the file (see below)
+
+Please refer to the following website to generate a key: [https://ai.google.dev/gemini-api/docs/api-key]
+
+```python
+import os
+from dataclasses import dataclass
+
+# ============================================================================
+# IMPORTANT: ADD GOOGLE API KEY
+# ============================================================================
+
+os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "FALSE"
+os.environ["GOOGLE_API_KEY"] = ""  # Replace with your actual API key
+```
+
+---
+
 
 ## Usage
 
