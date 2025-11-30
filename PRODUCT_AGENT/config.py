@@ -2,25 +2,11 @@ import os
 from dataclasses import dataclass
 
 # ============================================================================
-# IMPORTANT: CHOOSE YOUR AUTHENTICATION METHOD
+# IMPORTANT: ADD GOOGLE API KEY
 # ============================================================================
-# Option 1: Use AI Studio (Recommended for development)
-#   - Uncomment the lines below and add your API key
-#   - Comment out the Vertex AI section
 
 os.environ["GOOGLE_GENAI_USE_VERTEXAI"] = "FALSE"
-os.environ["GOOGLE_API_KEY"] = "AIzaSyBE758h-O3uYnfbZ5S-Ba_xPnMBcl9cb4k"  # Replace with your actual API key
-
-# Option 2: Use Vertex AI (For production)
-#   - Comment out the AI Studio section above
-#   - Uncomment the lines below
-#   - Make sure you have gcloud auth configured
-
-# import google.auth
-# _, project_id = google.auth.default()
-# os.environ.setdefault("GOOGLE_CLOUD_PROJECT", project_id)
-# os.environ.setdefault("GOOGLE_CLOUD_LOCATION", "global")
-# os.environ.setdefault("GOOGLE_GENAI_USE_VERTEXAI", "TRUE")
+os.environ["GOOGLE_API_KEY"] = ""  # Replace with your actual API key
 
 # ============================================================================
 
