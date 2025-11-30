@@ -124,16 +124,22 @@ streamlit run streamlit_app.py
 Food_Product_Agent/
 ├─ PRODUCT_AGENT/
 │   ├─ __init__.py
-│   ├─ agent.py                  # Main agent orchestration
-│   ├─ sub_agents.py             # Sub-agent definitions
+│   ├─ agent.py                      # Main agent orchestration
+│   ├─ sub_agents                    # Sub-agent definitions
+├       |─ alternative_finder.py     # Finds alternative products
+├       |─ google_search_agent.py    # Custom Google Search Agent
+├       |─ health_assessor.py        # Assesses the healthiness of a product
+├       |─ nova_classifier.py        # Determines the level of food processing for a product
+├       └─ product_researcher.py     # Finds the ingredients of a given product
+
 ├─ tools/
-│   └─ google_search_tool.py     # Wikipedia-filtered Google Search tool
-├─ streamlit_app.py              # Interactive testing interface
-├─ config.py                     # Model configuration and parameters
-├─ agent_util.py                 # Utility functions for agents
-├─ validation_checkers.py        # Custom validation checkers for agent outputs
-├─ requirements.txt              # Dependencies
-├─ flowchart.png                 # Optional architecture diagram
+│   └─ google_search_tool.py         # Wikipedia-filtered Google Search tool
+├─ streamlit_app.py                  # Interactive testing interface
+├─ config.py                         # Model configuration and parameters
+├─ agent_util.py                     # Utility functions for agents
+├─ validation_checkers.py            # Custom validation checkers for agent outputs
+├─ requirements.txt                  # Dependencies
+├─ flowchart.png                     # Agent Architecture diagram
 ```
 
 ---
