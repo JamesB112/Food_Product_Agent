@@ -106,18 +106,6 @@ result_state = interactive_food_health_agent.run({"user_input": "Nutella"})
 print(result_state)
 ```
 
-### Running the Streamlit App
-
-```bash
-streamlit run streamlit_app.py
-```
-
-* Enter a product name
-* Click **Analyze Product**
-* View structured results: product info, NOVA classification, health score, and alternatives
-
----
-
 ## Repository Structure
 
 ```
