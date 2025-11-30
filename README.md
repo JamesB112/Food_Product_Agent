@@ -8,6 +8,10 @@ This project implements a multi-agent system for analyzing food products using t
 
 Consumers often struggle to understand the nutritional quality and health implications of food products. Manual research is time-consuming, inconsistent, and difficult to scale when comparing multiple products or exploring ingredients in depth.
 
+In Australia, a health star rating system does exists, however is not widely adopted, and experts say is based on a flawed formula, which manufactors can easlially explit to make their products seem healthy, where in reality they are not [https://www.sbs.com.au/news/article/health-star-rating-system-changes-criticism/g2el9r52i].
+
+To address this issue, I have developed a draft AI Agent, which despite having a lot more work to get it production ready, addesses this issue, by giving propoer advice to consumers.
+
 The Food Product Health Agent automates this workflow. It combines a Wikipedia-filtered Google Search tool with specialized sub-agents to provide structured, actionable insights on food products.
 
 ![Architecture](./flowchart.png "Optional Title")
