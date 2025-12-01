@@ -2,7 +2,6 @@ import requests
 from typing import Dict, Any, List
 from google.adk.tools import FunctionTool
 
-
 # ------------------- Product Lookup -------------------
 
 def openfoodfacts_lookup(product_name: str) -> dict:
@@ -64,6 +63,88 @@ def openfoodfacts_lookup(product_name: str) -> dict:
     
     return {"error": "No product found in Open Food Facts database. Try searching with a more specific product name or brand."}
 
+
+# In your tools module (e.g., tools.py or tools/__init__.py)
+
+from google import genai
+from typing import Dict, Any
+
+# In your tools module
+
+from google import genai
+from typing import Dict, Any, Optional, List
+
+def google_search_product(product_name: str) -> Dict[str, Any]:
+    """
+    Search for food product ingredients, per 100g nutrition, and allergen information using Google Search.
+    
+    Args:
+        product_name: Name of the food product to search for
+        
+    Returns:
+        Dictionary containing:
+        - product_name: str
+        - brand: str (if found)
+        - ingredients: list of str
+        - nutrition_per_100g: dict with energy, protein, carbs, sugars, fat, saturated_fat, fiber, sodium
+        - allergen_info: dict with gluten_free (bool), traces_of_nuts (bool/str)
+        - sources: list of URLs
+    """
+    client = genai.Client()
+    
+    # Detailed search query for comprehensive product information
+    search_query = f"""
+    Find detailed information for the food product: {product_name}
+    
+    Please provide:
+    1. Complete ingredients list
+    2. Nutritional information per 100g (energy/calories, protein, carbohydrates, sugars, fat, saturated fat, fiber, sodium/salt)
+    3. Allergen information including whether it is gluten-free and if it contains traces of nuts
+    4. Brand name if available
+    
+    Search official product pages and manufacturer websites.
+    """
+    
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-lite",
+        contents=search_query,
+        config={
+            "tools": [{"google_search": {}}],
+        }
+    )
+    
+    # Structure the product data
+    product_data = {
+        "product_name": product_name,
+        "brand": None,
+        "ingredients": [],
+        "nutrition_per_100g": {
+            "energy_kj": None,
+            "energy_kcal": None,
+            "protein_g": None,
+            "carbohydrates_g": None,
+            "sugars_g": None,
+            "fat_g": None,
+            "saturated_fat_g": None,
+            "fiber_g": None,
+            "sodium_g": None,
+            "salt_g": None,
+        },
+        "allergen_info": {
+            "gluten_free": None,
+            "traces_of_nuts": None,
+        },
+        "raw_search_results": response.text,
+        "sources": []
+    }
+    
+    # Extract sources from grounding metadata
+    if hasattr(response, 'grounding_metadata') and response.grounding_metadata:
+        product_data["sources"] = [
+            chunk.uri for chunk in response.grounding_metadata.grounding_chunks
+        ]
+    
+    return product_data
 
 # ------------------- NOVA Classification -------------------
 
