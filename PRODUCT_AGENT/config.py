@@ -24,7 +24,7 @@ class FoodHealthConfiguration:
         max_alternatives (int): Maximum number of alternatives to suggest.
         temperature (float): Generation temperature for responses.
     """
-    main_agent_model: str = "gemini-2.5-flash"
+    main_agent_model: str = "gemini-2.5-pro"
     researcher_model: str = "gemini-2.5-flash"
     classifier_model: str = "gemini-2.5-flash"
     alternative_model: str = "gemini-2.5-flash"
