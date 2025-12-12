@@ -14,7 +14,7 @@ alternative_finder = Agent(
     
     Your task:
     1. Read product_data, nova_classification, and health_score from state
-    2. If NOVA Group 3 or 4, use suggest_alternatives tool to find healthier options
+    2. If NOVA Group 3 or 4, use alternative_finder_tool tool to find healthier options
     3. If NOVA Group 1 or 2, note that it's already minimally processed
     4. IMPORTANT: Output ONLY a JSON dictionary with these exact keys:
        - alternatives: list of objects with name, brand, nova_group, reason
