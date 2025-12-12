@@ -166,7 +166,7 @@ There is a lot of room for improving this Agent, including but not limited to:
 
 - Redesign the food product recommender to use grocery websites, so pricing data can be used as a ranking metric as well (i.e., Health‑to‑Price ratio). It's clear that not everyone can afford the healthiest options, but incorporating cost‑sensitive ranking would increase accessibility.
 
-- Search Engine change. Add in google search as a tool, as open facts can be quite limited
+- Search Engine enhancements. Optimise the Google Search engine tool for better results.
 
 - Add debugging, logging, and persistent chat/history storage to improve user experience and help identify weak points in the architecture. Caching previously retrieved product data would also speed up future queries.
 
